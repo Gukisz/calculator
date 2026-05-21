@@ -185,8 +185,8 @@ function treatKeyboardInput(event)
 document.addEventListener('keydown', treatKeyboardInput);
 document.addEventListener('DOMContentLoaded', function () {
 	let elements = Array.from(document.getElementsByClassName('calc-buttons'));
-	elements.push(...document.getElementsByClassName('class-buttons double'));
-	elements.push(...document.getElementsByClassName('class-buttons triple'));
+	elements.push(...document.querySelectorAll('.calc-button.double'));
+	elements.push(...document.querySelectorAll('.calc-button.triple'));
 
 	for (let i = 0; i < elements.length; ++i) 
 		elements[i].addEventListener('keydown', function (event) { event.preventDefault(); });

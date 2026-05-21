@@ -11,7 +11,7 @@ html{
 }
 
 *,
-*::before
+*::before,
 *::after{
     box-sizing: inherit;
     margin: 0;
@@ -23,7 +23,6 @@ body{
     background: linear-gradient(320deg, #007566, #589A8D, #8FC1B5);
     display: flex;
     font-family: 'Dosis', sans-serif;
-    font-display: swap;
     height: inherit;
     justify-content: center;
 }
