@@ -1,110 +1,415 @@
-html{
+:root {
+    --bg-gradient: linear-gradient(320deg, #007566, #589A8D, #8FC1B5);
+    --wrapper-bg: rgba(255, 255, 255, 0.30);
+    --glass-bg: rgba(255, 255, 255, 0.75);
+    --text-color: #232323;
+    --operator-bg: #265c4bc9;
+    --operator-text: #fff;
+    --active-color: #c8a97e;
+    --toolbar-bg: rgba(0, 0, 0, 0.25);
+    --tool-btn-color: rgba(255, 255, 255, 0.8);
+    --shadow-color: rgba(35, 35, 35, 0.1);
+    --border-color: rgba(255, 255, 255, 0.34);
+    --history-bg: rgba(255, 255, 255, 0.9);
+    --history-text: #555;
+}
+
+/* ── Dark (no palette) ── */
+body.dark {
+    --bg-gradient: linear-gradient(320deg, #1a1a2e, #16213e, #0f3460);
+    --wrapper-bg: rgba(0, 0, 0, 0.40);
+    --glass-bg: rgba(30, 30, 50, 0.8);
+    --text-color: #e0e0e0;
+    --operator-bg: #0f3460c9;
+    --operator-text: #e0e0e0;
+    --active-color: #e94560;
+    --toolbar-bg: rgba(255, 255, 255, 0.1);
+    --tool-btn-color: rgba(255, 255, 255, 0.6);
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --history-bg: rgba(20, 20, 40, 0.95);
+    --history-text: #aaa;
+}
+
+/* ── Green (default, no palette class needed) ── */
+/* Light: already in :root */
+body.dark.palette-green {
+    --bg-gradient: linear-gradient(320deg, #1a3a2e, #1a4a3d, #265c4b);
+    --operator-bg: #1a4a3dc9;
+    --active-color: #8FC1B5;
+}
+
+/* ── Blue ── */
+body.palette-blue {
+    --bg-gradient: linear-gradient(320deg, #1e3c72, #2a5298, #4a7bc4);
+    --operator-bg: #1e3c72c9;
+    --active-color: #90caf9;
+}
+body.dark.palette-blue {
+    --bg-gradient: linear-gradient(320deg, #0d1b3e, #162d5a, #1e3c72);
+    --operator-bg: #0d1b3ec9;
+    --active-color: #64b5f6;
+}
+
+/* ── Purple ── */
+body.palette-purple {
+    --bg-gradient: linear-gradient(320deg, #4a0e4e, #7b2d8b, #b06ab3);
+    --operator-bg: #4a0e4ec9;
+    --active-color: #ce93d8;
+}
+body.dark.palette-purple {
+    --bg-gradient: linear-gradient(320deg, #2d0630, #4a0e4e, #6b2077);
+    --operator-bg: #2d0630c9;
+    --active-color: #ba68c8;
+}
+
+/* ── Orange ── */
+body.palette-orange {
+    --bg-gradient: linear-gradient(320deg, #cc5500, #e07c3c, #f0a070);
+    --operator-bg: #cc5500c9;
+    --active-color: #ffcc80;
+}
+body.dark.palette-orange {
+    --bg-gradient: linear-gradient(320deg, #7a3300, #a04000, #cc5500);
+    --operator-bg: #7a3300c9;
+    --active-color: #ffab91;
+}
+
+/* ── Pink ── */
+body.palette-pink {
+    --bg-gradient: linear-gradient(320deg, #7a2040, #b84a6a, #d4809a);
+    --operator-bg: #7a2040c9;
+    --active-color: #f48fb1;
+}
+body.dark.palette-pink {
+    --bg-gradient: linear-gradient(320deg, #4a1028, #7a2040, #a03355);
+    --operator-bg: #4a1028c9;
+    --active-color: #f06292;
+}
+
+html {
     box-sizing: border-box;
     height: 100%;
 }
 
-/***** Prevents display screen to be break ****/
-#screen {
-	white-space: nowrap;
-	overflow-x:  hidden;
-	display:     block;
-}
-
 *,
 *::before,
-*::after{
+*::after {
     box-sizing: inherit;
     margin: 0;
     padding: 0;
 }
 
-body{
+body {
     align-items: center;
-    background: linear-gradient(320deg, #007566, #589A8D, #8FC1B5);
+    background: var(--bg-gradient);
     display: flex;
+    flex-direction: column;
     font-family: 'Dosis', sans-serif;
     height: inherit;
     justify-content: center;
+    transition: background 0.5s ease;
+    min-height: 100vh;
+    padding: 20px;
 }
 
-.wrapper{
+/* Toolbar */
+.toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 420px;
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    background: var(--toolbar-bg);
+    border-radius: 12px;
+    backdrop-filter: blur(5px);
+}
+
+.toolbar-left,
+.toolbar-right {
+    display: flex;
+    gap: 6px;
+}
+
+.toolbar-center {
+    display: flex;
+    gap: 6px;
+}
+
+.tool-btn {
+    background: none;
+    border: none;
+    color: var(--tool-btn-color);
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+}
+
+.tool-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+.palette-btn {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.palette-btn:hover {
+    transform: scale(1.2);
+    border-color: #fff;
+}
+
+.palette-btn[data-palette="green"] { background: #007566; }
+.palette-btn[data-palette="blue"] { background: #2a5298; }
+.palette-btn[data-palette="purple"] { background: #7b2d8b; }
+.palette-btn[data-palette="orange"] { background: #cc5500; }
+.palette-btn[data-palette="pink"] { background: #b84a6a; }
+
+/* Wrapper */
+.wrapper {
     backdrop-filter: blur(5.5px);
     -webkit-backdrop-filter: blur(5.5px);
     border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(35, 35, 35, 0.1);
-    color: #232323;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    background: rgba(255, 255, 255, 0.30);
-    border: 1px solid rgba(255, 255, 255, 0.34);
-    flex-basis: 400px;
-    height: 540px;
-    padding: 20px 35px;
+    box-shadow: 0 4px 30px var(--shadow-color);
+    color: var(--text-color);
+    background: var(--wrapper-bg);
+    border: 1px solid var(--border-color);
+    width: 100%;
+    max-width: 420px;
+    padding: 20px 25px;
+    transition: background 0.3s, color 0.3s;
 }
 
-.screen{
+/* Screen */
+.screen {
+    position: relative;
     backdrop-filter: blur(5.5px);
     -webkit-backdrop-filter: blur(5.5px);
-    background-color: rgba(255, 255, 255, 0.75);
+    background-color: var(--glass-bg);
     border: 1px solid rgba(255, 255, 255, 0.01);
     border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(255, 255, 255, 0.01);
-    color: #232323;
-    font-size: 40px;
-    overflow: auto;
+    box-shadow: 0 4px 30px var(--shadow-color);
+    color: var(--text-color);
+    font-size: 36px;
+    overflow: hidden;
     padding: 20px;
     text-align: right;
-    width: 326px;
+    width: 100%;
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    transition: background 0.3s, color 0.3s;
 }
 
-.calc-button-row{
+#screen {
+    white-space: nowrap;
+    overflow-x: auto;
+    display: block;
+    scrollbar-width: none;
+    font-size: 2rem;
+    line-height: 1.2;
+}
+
+#screen::-webkit-scrollbar {
+    display: none;
+}
+
+/* History Panel */
+.history-panel {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--history-bg);
+    color: var(--history-text);
+    padding: 15px;
+    overflow-y: auto;
+    font-size: 0.9rem;
+    text-align: left;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+}
+
+.history-panel.open {
+    display: block;
+}
+
+.history-item {
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+    font-size: 0.85rem;
+}
+
+.history-item:last-child {
+    border-bottom: none;
+}
+
+.history-expr {
+    color: var(--history-text);
+    font-weight: 400;
+}
+
+.history-result {
+    color: var(--text-color);
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.history-empty {
+    text-align: center;
+    color: var(--history-text);
+    margin-top: 20px;
+    font-size: 0.9rem;
+}
+
+/* Buttons */
+.calc-button-row {
     display: flex;
     justify-content: space-between;
     margin: 5% 0;
+    gap: 8px;
 }
 
-.calc-button{
+.calc-button-row:last-child {
+    margin-bottom: 0;
+}
+
+.calc-button {
     backdrop-filter: blur(5.5px);
     -webkit-backdrop-filter: blur(5.5px);
-    background: rgba(255, 255, 255, 0.75);
+    background: var(--glass-bg);
     border: 1px solid rgba(255, 255, 255, 0.01);
     border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(35, 35, 35, 0.1);
-    color: #232323;
-    flex-basis: 20%;
+    box-shadow: 0 4px 30px var(--shadow-color);
+    color: var(--text-color);
+    flex: 1;
     font-family: inherit;
-    font-size: 24px;
-    height: 65px;
+    font-size: 22px;
+    height: 58px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
 }
 
-.calc-button:last-child{
+/* Operator buttons (last in each row) */
+.calc-button:last-child {
     backdrop-filter: blur(5.5px);
     -webkit-backdrop-filter: blur(5.5px);
-    background: rgba(255, 255, 255, 0.75);
+    background: var(--operator-bg);
     border: 1px solid rgba(255, 255, 255, 0.01);
     border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(35, 35, 35, 0.1);
-    color: #fff;
-    background: #265c4bc9;
+    box-shadow: 0 4px 30px var(--shadow-color);
+    color: var(--operator-text);
 }
 
-.calc-button:last-child:hover{
+.calc-button:last-child:hover {
     background-color: inherit;
     color: inherit;
 }
 
-.calc-button:hover{
+.calc-button:hover {
     background-color: inherit;
 }
 
-.calc-button:active{
-    background-color: #ffef78;
+.calc-button:active,
+.calc-button.pressed {
+    background-color: var(--active-color) !important;
+    transform: scale(0.95);
 }
 
-.double{
-    flex-basis: 47%;
+/* Responsividade */
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    .toolbar {
+        max-width: 100%;
+        padding: 6px 10px;
+    }
+
+    .wrapper {
+        max-width: 100%;
+        padding: 15px;
+        border-radius: 12px;
+    }
+
+    .screen {
+        padding: 15px;
+        min-height: 65px;
+        font-size: 28px;
+    }
+
+    #screen {
+        font-size: 1.6rem;
+    }
+
+    .calc-button {
+        height: 50px;
+        font-size: 18px;
+        border-radius: 12px;
+    }
+
+    .calc-button-row {
+        gap: 6px;
+        margin: 4% 0;
+    }
+
+    .palette-btn {
+        width: 18px;
+        height: 18px;
+    }
 }
 
-.triple{
-    flex-basis: 73%;
+@media (max-width: 360px) {
+    .calc-button {
+        height: 44px;
+        font-size: 16px;
+        border-radius: 10px;
+    }
+
+    .calc-button-row {
+        gap: 4px;
+        margin: 3% 0;
+    }
+
+    .wrapper {
+        padding: 12px;
+    }
+
+    .screen {
+        padding: 12px;
+        min-height: 55px;
+    }
+
+    #screen {
+        font-size: 1.3rem;
+    }
+
+    .toolbar {
+        padding: 4px 8px;
+    }
+
+    .palette-btn {
+        width: 16px;
+        height: 16px;
+    }
 }

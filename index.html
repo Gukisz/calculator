@@ -9,81 +9,70 @@
     <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    
+
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <button class="tool-btn" id="historyToggle" onclick="toggleHistory()" title="Histórico">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </button>
+        </div>
+        <div class="toolbar-center">
+            <button class="palette-btn" data-palette="green" onclick="setPalette('green')" title="Verde"></button>
+            <button class="palette-btn" data-palette="blue" onclick="setPalette('blue')" title="Azul"></button>
+            <button class="palette-btn" data-palette="purple" onclick="setPalette('purple')" title="Roxo"></button>
+            <button class="palette-btn" data-palette="orange" onclick="setPalette('orange')" title="Laranja"></button>
+            <button class="palette-btn" data-palette="pink" onclick="setPalette('pink')" title="Rosa"></button>
+        </div>
+        <div class="toolbar-right">
+            <button class="tool-btn" id="themeToggle" onclick="toggleTheme()" title="Tema">
+                <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+        </div>
+    </div>
 
     <div class="wrapper">
-	<section class="screen">
-		<span id="screen"> 0 </span>
+        <section class="screen">
+            <div class="history-panel" id="historyPanel"></div>
+            <span id="screen">0</span>
         </section>
-    
+
         <section class="calc-buttons">
             <div class="calc-button-row">
-                <button tabindex="-1" class="calc-button double" onclick="clearScreen()">
-                    C
-                </button>
-                <button tabindex="-1" class="calc-button" onclick="deleteLast()">
-                    &larr;
-                </button>
-                <button tabindex="-1" class="calc-button" onclick="appendData(OPERATOR_APPEND, '/')">
-                    &divide;
-                </button>
+                <button tabindex="-1" class="calc-button" onclick="clearScreen()">C</button>
+                <button tabindex="-1" class="calc-button" onclick="deleteLast()">&larr;</button>
+                <button tabindex="-1" class="calc-button" onclick="appendData(OPERATOR_APPEND, '%')">%</button>
+                <button tabindex="-1" class="calc-button" onclick="toggleSign()">+/−</button>
+                <button tabindex="-1" class="calc-button" onclick="squareRoot()">√</button>
             </div>
 
             <div class="calc-button-row">
-                <button tabindex="-1" class="calc-button" onclick="appendData(NUMBER, '7')">
-                    7
-                </button>
-                <button tabindex="-1" class="calc-button" onclick="appendData(NUMBER, '8')">
-                    8
-                </button>
-                <button tabindex="-1" class="calc-button" onclick="appendData(NUMBER, '9')">
-                    9
-                </button>
-                <button tabindex="-1" class="calc-button" onclick="appendData(OPERATOR_APPEND, '*')">
-                    &times;
-                </button>
+                <button tabindex="-1" class="calc-button" onclick="appendData(NUMBER, '7')">7</button>
+                <button tabindex="-1" class="calc-button" onclick="appendData(NUMBER, '8')">8</button>
+                <button tabindex="-1" class="calc-button" onclick="appendData(NUMBER, '9')">9</button>
+                <button tabindex="-1" class="calc-button" onclick="appendData(OPERATOR_APPEND, '/')">&divide;</button>
             </div>
 
             <div class="calc-button-row">
-                <button tabindex="-1" class="calc-button" onclick="appendData(NUMBER, '4')">
-                    4
-                </button>
-                <button tabindex="-1" class="calc-button" onclick="appendData(NUMBER, '5')">
-                    5
-                </button>
-                <button tabindex="-1" class="calc-button" onclick="appendData(NUMBER, '6')">
-                    6
-                </button>
-                <button tabindex="-1" class="calc-button" onclick="appendData(OPERATOR_APPEND, '-')">
-                    &minus;
-                </button>
+                <button tabindex="-1" class="calc-button" onclick="appendData(NUMBER, '4')">4</button>
+                <button tabindex="-1" class="calc-button" onclick="appendData(NUMBER, '5')">5</button>
+                <button tabindex="-1" class="calc-button" onclick="appendData(NUMBER, '6')">6</button>
+                <button tabindex="-1" class="calc-button" onclick="appendData(OPERATOR_APPEND, '*')">&times;</button>
             </div>
 
             <div class="calc-button-row">
-                <button tabindex="-1" class="calc-button" onclick="appendData(NUMBER, '1')">
-                    1
-                </button>
-                <button tabindex="-1" class="calc-button" onclick="appendData(NUMBER, '2')">
-                    2
-                </button>
-                <button tabindex="-1" class="calc-button" onclick="appendData(NUMBER, '3')">
-                    3
-                </button>
-                <button tabindex="-1" class="calc-button" onclick="appendData(OPERATOR_APPEND, '+')">
-                    &plus;
-                </button>
+                <button tabindex="-1" class="calc-button" onclick="appendData(NUMBER, '1')">1</button>
+                <button tabindex="-1" class="calc-button" onclick="appendData(NUMBER, '2')">2</button>
+                <button tabindex="-1" class="calc-button" onclick="appendData(NUMBER, '3')">3</button>
+                <button tabindex="-1" class="calc-button" onclick="appendData(OPERATOR_APPEND, '-')">&minus;</button>
             </div>
 
             <div class="calc-button-row">
-                <button tabindex="-1" class="calc-button triple" onclick="appendData(NUMBER, '0')">
-                    0
-                </button>
-                <button tabindex="-1" class="calc-button" onclick="evaluateExpression()">
-                    &equals;
-                </button>
+                <button tabindex="-1" class="calc-button" onclick="appendData(NUMBER, '0')">0</button>
+                <button tabindex="-1" class="calc-button" onclick="appendData(NUMBER, '.')">.</button>
+                <button tabindex="-1" class="calc-button" onclick="evaluateExpression()">&equals;</button>
+                <button tabindex="-1" class="calc-button" onclick="appendData(OPERATOR_APPEND, '+')">&plus;</button>
             </div>
         </section>
-    
     </div>
 
     <script src="script.js"></script>
