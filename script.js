@@ -1,3 +1,7 @@
+/* Constants used in HTML onclick */
+const NUMBER = 3;
+const OPERATOR_APPEND = 1;
+
 const inputTypes = {
 	clearScreen: 0,
 	operator: 1, 
